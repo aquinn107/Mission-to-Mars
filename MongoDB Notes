@@ -1,0 +1,73 @@
+A Mongo database contains collections. These collections contain documents, and each document contains fields, and fields are where the data is stored.
+
+While Mongo and SQL are both databases, that's where the similarities end. They handle documents differently, the storage model isn't even close, and we even interact with them in very different ways.
+
+1. To get started with Mongo, first open a new terminal window, but make sure your working environment is activated. Note that your environment does not need to have the same name as the one in the image.
+
+2. Then, to start an instance, type mongod into the first line of your terminal and press return or enter on your keyboard. Some Mac users may not need to run this command as Mongo is already running in the background
+
+We need to keep this tab open and active so that the Mongo instance continues to run. While Mongo does have a GUI, similar to pgAdmin for Postgres, we'll be using a command line interface (CLI) to make connections within the database.
+
+3. In our terminal, create a second window or tab to use for working in Mongo. Again, make sure your environment is active.
+
+On the first line of this new window, type "mongo." This is done in a new window because, after you execute the command, you cannot use the terminal for other tasks—only to send information to and from the database.
+
+After executing the command, your terminal will show a right angle bracket and a blinking cursor. This indicates that the database is active and ready for use.
+
+### Create a Database
+We don't have a fancy GUI to use while navigating through creating a database and inserting data, but that doesn't mean that our commands will be very complex. Let's create a new practice database to get used to some of the more common commands.
+
+In the terminal where Mongo is active and awaiting instruction, type "use practicedb" and then press Enter. This creates a new database named "practicedb" and makes it our active database.
+
+The new Mongo database is named "practicedb."
+
+If you're not sure which database you're using, type "db" in the terminal and press Enter.
+
+After typing "db" into the terminal and pressing Enter, the name of the current active database is returned. This is a quick check to make sure we'll be saving data to the right spot.
+
+The terminal lists the active Mongo database.
+
+You can also see how many databases are stored locally by typing "show dbs" in your terminal. There should be a few already there by default, so don't be alarmed if more than one appears that you didn't create yourself.
+
+There is also a way to check to see what data, or collections, are already in the database. Type "show collections" into the shell, or terminal, then press Enter.
+
+Nothing came up after that, right? That's a good thing. We haven't entered any data yet. We'll practice doing that next.
+
+### Insert Data
+Now that we've confirmed we're in the right database, we can practice the commands to insert data or a document.
+The syntax follows: db.collectionName.insert({key:value}). Its components do the following:
+
+db refers to the active database, practicedb.
+collectionName is the name of the new collection we're creating (we'll customize it when we practice).
+.insert({ }) is how MongoDB knows we're inserting data into the collection.
+key:value is the format into which we're inserting our data; its construction is very similar to a Python dictionary.
+In short, we're saying, "Hey, Mongo, use the database we've already specified, and insert a document into this collection. If there's not a collection named that, then create one."
+
+Let's explore how this works a bit by adding some zoo animals to our collection.
+In the shell, type:
+db.zoo.insert({name: 'Cleo', species: 'jaguar', age: 12, hobbies: ['sleeping', 'eating', 'climbing']})
+After pressing Enter, the next line in your terminal should read WriteResult({ 'nInserted" : 1 }). This means that we've successfully inserted Cleo into the database.
+
+Now let's add another animal. In your shell, type the following:
+db.zoo.insert({name: 'Banzai', species: 'fox', age: 1, hobbies: ['sleeping', 'eating', 'playing']}).
+
+This time we've added a fox to our collection, but the code is very similar to when we added Cleo.
+
+
+Now that we've added data to our collection, when we type "show collections" we'll actually see a result: zoo. The name of our new collection is returned. We can also view what's inside a collection with the find() command. Executing db.zoo.find() in the terminal will return each of the documents we've already added.
+
+-A MongoDB shell with "db.zoo.find()" executed, returning the two documents already added: an entry for Cleo and an entry for Banzai.
+
+-Documents can also be deleted or dropped. The syntax to do so follows: db.collectionName.remove({}).
+So, if we wanted to remove Cleo from the database, we would update that line of code to:
+db.zoo.remove({name: 'Cleo'}).
+
+-We can also empty the collection at once, instead of one document at a time. For example, to empty our pets collection, we would type: db.zoo.remove({}). Because the inner curly brackets are empty, Mongo will assume that we want everything in our pets collection to be removed.
+
+-Additionally, to remove a collection all together, we would use db.zoo.drop(). After running that line in the shell, our pets collection will no longer exist at all.
+
+-And to remove the test database, we will use this line of code: db.dropDatabase().
+
+
+
+You can quit the Mongo shell by using keyboard commands: Command + C for Mac or CTRL + C for Windows. This stops the processes that are actively running and frees up your terminal. Remember to quit both the server and the shell when you're done practicing. Otherwise, they'll continue to run in the background and use system resources, such as memory, and slow down the response time of your computer.
